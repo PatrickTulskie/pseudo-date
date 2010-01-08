@@ -6,5 +6,6 @@ lib/core_extensions/string.rb
 lib/pseudo_date.rb
 lib/pseudo_date/parser.rb
 lib/pseudo_date/pseudo_date.rb
+pseudo_date.gemspec
 test/test_helper.rb
 test/test_parser.rb
