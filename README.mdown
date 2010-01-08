@@ -1,0 +1,19 @@
+# Pseudo Date
+
+## What is a Pseudo Date?
+
+It's a date but not really.  A PseudoDate object has a day, month, and year but it does not require all of them like the built in ruby date classes.
+
+## What Is This For?
+
+PseudoDate was created to parse odd dates in odd formats and attempt to extract as much information from them as possible.  It's especially handy when you're trying to convert a date string that has come from an OCR'd source.
+
+## Assumptions
+
+As with all parsing, one needs to make assumptions
+
+	All dates are in the past.
+
+## Examples
+
+d = '20010923'
