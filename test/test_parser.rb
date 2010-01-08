@@ -53,6 +53,47 @@ class TestParser < Test::Unit::TestCase
       end
     end
     
+    # 25-06-1985
+    context "day-month-year" do
+      should 'be exact precision' do
+        assert_equal PseudoDate.new("#{@day}-#{@month}-#{@year}").precision, 'exact'
+      end
+      
+      should 'match original input' do
+        pd = PseudoDate.new("#{@day}-#{@month}-#{@year}")
+        assert_equal @day, pd.day
+        assert_equal @month, pd.month
+        assert_equal @year, pd.year
+      end
+    end
+    
+    # 06/25/1985
+    context "month/day/year" do
+      should 'be exact precision' do
+        assert_equal PseudoDate.new("#{@month}/#{@day}/#{@year}").precision, 'exact'
+      end
+      
+      should 'match original input' do
+        pd = PseudoDate.new("#{@month}/#{@day}/#{@year}")
+        assert_equal @day, pd.day
+        assert_equal @month, pd.month
+        assert_equal @year, pd.year
+      end
+    end
+    
+    # 06/1985
+    context "month/year" do
+      should 'be partial precision' do
+        assert_equal PseudoDate.new("#{@month}/#{@year}").precision, 'year_month'
+      end
+      
+      should 'match original input' do
+        pd = PseudoDate.new("#{@month}/#{@year}")
+        assert_equal @month, pd.month
+        assert_equal @year, pd.year
+      end
+    end
+    
     # 85
     context "two digit year" do
       should 'be year precision' do

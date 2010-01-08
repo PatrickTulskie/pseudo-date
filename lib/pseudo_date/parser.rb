@@ -6,9 +6,9 @@ class Parser
     # Minor Pre Cleanup
     input.strip!; input.gsub!('~','')
     
-    date = Date.parse(input) rescue nil
+    date = input.split(/\/|-/).length < 3 ? nil : Date.parse(input) rescue nil
     if date
-      date_hash = { :year => date.year, :month => date.month, :day => date.day }
+      date_hash = { :year => date.year.to_s, :month => date.month.to_s, :day => date.day.to_s }
     else
       year, month, day = parse_string(input)
       date_hash = { :year => year, :month => month, :day => day }
@@ -69,21 +69,20 @@ class Parser
           month = date_array.last
           day = date_array[1]
         else
-          # month = date_array[1]
-          # day = date_array.first
           month = date_array.first
           day = date_array[1]
         end
+        month, day = [day, month] if month.to_i > 12 && month.to_i > day.to_i
       end
     elsif input.length == 4 # 2004
       year = input.to_s if (input.slice(0..1) == '19' || input.slice(0..1) == '20')
     elsif input.length == 2 # 85
       year = (input.to_i > Date.today.year.to_s.slice(2..4).to_i) ? "19#{input}" : "20#{input}"
-    # elsif input.match(/\w/) # Jun 23, 2004
-    #   begin
-    #     d = Date.parse(input)
-    #     year, month, day = d.year.to_s, d.month.to_s, d.day.to_s
-    #   rescue; end
+    elsif input.match(/\w/) # Jun 23, 2004
+      begin
+        d = Date.parse(input)
+        year, month, day = d.year.to_s, d.month.to_s, d.day.to_s
+      rescue; end
     end
     return [year, month, day]
   end
