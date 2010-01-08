@@ -1,49 +1,18 @@
+require 'date'
 class Parser
   
   def self.parse(input)
     date_hash = {}
-    day, month, year = "00", "00", "0000"
     # Minor Pre Cleanup
     input.strip!; input.gsub!('~','')
     
-    if input.match('/') # 02/25/2008
-      date_array = input.split('/')
-      if date_array.length == 3
-        begin
-          parsed_date = Date.parse(self)
-          month, day, year = parsed_date.month, parsed_date.day, parsed_date.year
-        rescue
-          month, day, year = date_array
-        end
-      elsif date_array.length == 2
-        month, year = date_array
-      end
-    elsif input.length == 8 && is_numeric?(input) # 20080225
-      year, month, day = input.slice(0..3), input.slice(4..5), input.slice(6..7)
-    elsif input.match('-') # 2008-25-02 or 02-25-2008
-      date_array = input.split('-')
-      year = date_array.select{ |part| part.length == 4 }.first
-      unless year.nil? || date_array.length != 3
-        if date_array.first == year
-          month = date_array.last
-          day = date_array[1]
-        else
-          month = date_array[1]
-          day = date_array.first
-        end
-      end
-    elsif input.length == 4 # 2004
-      year = input.to_s if (input.slice(0..1) == '19' || input.slice(0..1) == '20')
-    elsif input.length == 2 # 85
-      year = (input.to_i > Date.today.year.to_s.slice(2..4).to_i) ? "19#{input}" : "20#{input}"
-    elsif input.match(/\w/) # Jun 23, 2004
-      begin
-        d = Date.parse(input)
-        year, month, day = d.year.to_s, d.month.to_s, d.day.to_s
-      rescue; end
+    date = Date.parse(input) rescue nil
+    if date
+      date_hash = { :year => date.year, :month => date.month, :day => date.day }
+    else
+      year, month, day = parse_string(input)
+      date_hash = { :year => year, :month => month, :day => day }
     end
-    
-    date_hash = { :year => year, :month => month, :day => day }
     
     # Post parsing cleanup
     date_hash.each do |key, value|
@@ -72,6 +41,51 @@ class Parser
     end
     
     return date_hash.empty? ? nil : date_hash
+  end
+  
+  private
+  
+  def self.parse_string(input)
+    day, month, year = "00", "00", "0000"
+    if input.match('/') # 02/25/2008
+      date_array = input.split('/')
+      if date_array.length == 3
+        begin
+          parsed_date = Date.parse(self)
+          month, day, year = parsed_date.month, parsed_date.day, parsed_date.year
+        rescue
+          month, day, year = date_array
+        end
+      elsif date_array.length == 2
+        month, year = date_array
+      end
+    elsif input.length == 8 && is_numeric?(input) # 20080225
+      year, month, day = input.slice(0..3), input.slice(4..5), input.slice(6..7)
+    elsif input.match('-') # 1985-09-25 or 02-25-2008
+      date_array = input.split('-')
+      year = date_array.select{ |part| part.length == 4 }.first
+      unless year.nil? || date_array.length != 3
+        if date_array.first == year
+          month = date_array.last
+          day = date_array[1]
+        else
+          # month = date_array[1]
+          # day = date_array.first
+          month = date_array.first
+          day = date_array[1]
+        end
+      end
+    elsif input.length == 4 # 2004
+      year = input.to_s if (input.slice(0..1) == '19' || input.slice(0..1) == '20')
+    elsif input.length == 2 # 85
+      year = (input.to_i > Date.today.year.to_s.slice(2..4).to_i) ? "19#{input}" : "20#{input}"
+    # elsif input.match(/\w/) # Jun 23, 2004
+    #   begin
+    #     d = Date.parse(input)
+    #     year, month, day = d.year.to_s, d.month.to_s, d.day.to_s
+    #   rescue; end
+    end
+    return [year, month, day]
   end
   
 end

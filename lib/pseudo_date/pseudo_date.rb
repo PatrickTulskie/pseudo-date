@@ -7,8 +7,7 @@ class PseudoDate
       # But it's already a hash!  Well, sometimes silly people pass a Mash object into this without realizing it.
     else
       input = '00000000' if input.to_s.strip == '19000000'
-      @string = input.to_s.strip
-      @date_hash = @string.to_date_hash
+      @date_hash = input.to_s.strip.to_date_hash
     end
     if @date_hash
       @year = @date_hash[:year].to_s.match('1900') ? '0000' : @date_hash[:year].to_s.strip
