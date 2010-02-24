@@ -2,7 +2,7 @@
 
 ## What is a Pseudo Date?
 
-It's a date but not really.  A PseudoDate object has a day, month, and year but it does not require all of them like the built in ruby date classes.
+It's a date but not really.  A PseudoDate object has a day, month, and year but it does not require all of them like the built in ruby date classes.  This allows you to parse obscure date strings that may or may not be complete.
 
 ## What Is This For?
 
@@ -10,10 +10,60 @@ PseudoDate was created to parse odd dates in odd formats and attempt to extract 
 
 ## Assumptions
 
-As with all parsing, one needs to make assumptions
+As with all parsing, one needs to make assumptions.  The main assumption made here is that all dates will be in the past.
 
-	All dates are in the past.
+## Other Notes
+
+PseudoDate stores date attributes in strings instead of integers to avoid losing the preceding '0' on various attributes.  This was a decision made when first creating the class because of the way things were being output in the project it was created for.
+
+## Compatability
+
+PseudoDates are not really compatible with other built-in date/time objects.  They do support some of the basic methods for abstracting numbers though.  PseudoDates that are of exact precision can be turned into ruby date objects.
+
+	>> p = PseudoDate.new('19850625')
+	 => #<PseudoDate:0x10190eff0 @month="06", @date_hash={:day=>"25", :month=>"06", :year=>"1985"}, year"1985", day"25"
+	>> p.precision
+	 => "exact" 
+	>> p.year
+	 => "1985" 
+	>> p.month
+	 => "06" 
+	>> p.day
+	 => "25"
+	>> p.to_date
+	 => #<Date: 4892483/2,0,2299161>
 
 ## Examples
 
-d = '20010923'
+	>> PseudoDate.new('19850625').to_hash
+	 => {:day=>"25", :month=>"06", :year=>"1985"}
+	
+	>> PseudoDate.new('1985-25-06').to_hash
+	 => {:day=>"25", :month=>"06", :year=>"1985"}
+	
+	>> PseudoDate.new('06-25-1985').to_hash
+	 => {:day=>"25", :month=>"06", :year=>"1985"}
+	
+	>> PseudoDate.new('25-06-1985').to_hash
+	 => {:day=>"25", :month=>"06", :year=>"1985"}
+	
+	>> PseudoDate.new('06/25/1985').to_hash
+	 => {:day=>"25", :month=>"06", :year=>"1985"}
+	
+	>> PseudoDate.new('06/1985').to_hash
+	 => {:day=>"00", :month=>"06", :year=>"1985"}
+	
+	>> PseudoDate.new('85').to_hash
+	 => {:day=>"00", :month=>"00", :year=>"1985"}
+	
+	>> PseudoDate.new('1985').to_hash
+	 => {:day=>"00", :month=>"00", :year=>"1985"}
+	
+	>> PseudoDate.new('Jun 25, 1985').to_hash
+	 => {:day=>"25", :month=>"06", :year=>"1985"}
+
+## Patches, Bugfixes, Additions...
+
+Feel free to fork and add stuff as you see fit.  This was written quickly to solve some problems so it could certainly use some more structure and organization.
+
+If you add something or fix something, make sure you run the very basic tests and add any new ones as required by your changes.
