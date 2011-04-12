@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = %q{PatrickTulskie@gmail.com}
   s.extra_rdoc_files = ["README.mdown", "lib/core_extensions/object.rb", "lib/core_extensions/string.rb", "lib/pseudo_date.rb", "lib/pseudo_date/parser.rb", "lib/pseudo_date/pseudo_date.rb"]
   s.files = ["Manifest", "README.mdown", "Rakefile", "lib/core_extensions/object.rb", "lib/core_extensions/string.rb", "lib/pseudo_date.rb", "lib/pseudo_date/parser.rb", "lib/pseudo_date/pseudo_date.rb", "test/test_helper.rb", "test/test_parser.rb", "pseudo_date.gemspec"]
-  s.homepage = %q{http://github.com/PatrickTulskie/pseudo_date}
+  s.homepage = %q{http://github.com/PatrickTulskie/pseudo-date}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Pseudo_date", "--main", "README.mdown"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{pseudo_date}
