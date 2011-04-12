@@ -11,6 +11,22 @@ class TestParser < Test::Unit::TestCase
       @string_date = 'Jun 25, 1985'
     end
     
+    context "date hash" do
+      should "parse an exact hash" do
+        pd = PseudoDate.new(:year => @year, :day => @day, :month => @month)
+        assert_equal @day, pd.day
+        assert_equal @month, pd.month
+        assert_equal @year, pd.year
+      end
+      
+      should "parse a hash inexact keys" do
+        pd = PseudoDate.new('Year' => @year, 'day' => @day, :Month => @month)
+        assert_equal @day, pd.day
+        assert_equal @month, pd.month
+        assert_equal @year, pd.year
+      end
+    end
+    
     # 19850625
     context "yearmonthday" do
       should 'be exact precision' do

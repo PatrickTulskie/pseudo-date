@@ -3,8 +3,7 @@ class PseudoDate
   
   def initialize(input)
     @date_hash = if input.is_a?(Hash)
-      input.to_hash.symbolize_keys
-      # But it's already a hash!  Well, sometimes silly people pass a Mash object into this without realizing it.
+      Hash[input.to_hash.map { |k, v| [k.to_s.downcase.to_sym, v] }]
     else
       input = '00000000' if input.to_s.strip == '19000000'
       @date_hash = input.to_s.strip.to_date_hash
