@@ -38,10 +38,16 @@ class PseudoDate
     end
   end
   
+  # =====================
+  # = Boolean Questions =
+  # =====================
   def valid?
     !(@date_hash.nil? || @date_hash.empty?)
   end
   
+  # ====================
+  # = Export Functions =
+  # ====================
   def to_date
     self.valid? ? Date.parse("#{@year}-#{@month}-#{@day}") : nil rescue nil
   end
@@ -61,6 +67,54 @@ class PseudoDate
   
   def to_hash
     @date_hash
+  end
+  
+  # ========================
+  # = Comparison Operators =
+  # ========================
+  def <(other)
+    case self.comparison_mode(other)
+    when 'exact'
+      self.to_date < other.to_date
+    when 'year_month'
+      self.year == other.year ? (self.month < other.month) : (self.year < other.year)
+    when 'year'
+      self.year < other.year
+    when 'mixed'
+      if self.year == other.year
+        if self.month == other.month
+          self.day.to_i < other.day.to_i
+        else
+          self.month < other.month
+        end
+      else
+        self.year < other.year
+      end
+    else
+      false
+    end
+  end
+  
+  def >(other)
+    other < self
+  end
+  
+  def ==(other)
+    (self.year == other.year) && (self.month == other.month) && (self.day == other.day)
+  end
+  
+  def <=>(other)
+    self == other ? 0 : (self < other ? -1 : 1)
+  end
+  
+  protected
+  
+  def comparison_mode(other)
+    if self.precision == other.precision
+      self.precision
+    else
+      'mixed'
+    end
   end
   
   private
