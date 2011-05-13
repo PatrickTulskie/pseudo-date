@@ -81,7 +81,11 @@ class PseudoDate
     when 'year'
       self.year < other.year
     when 'mixed'
-      if self.year == other.year
+      if self.precision == 'invalid'
+        true
+      elsif other.precision == 'invalid'
+        false
+      elsif self.year == other.year
         if self.month == other.month
           self.day.to_i < other.day.to_i
         else
