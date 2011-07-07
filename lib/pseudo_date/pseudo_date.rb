@@ -19,12 +19,12 @@ class PseudoDate
       @year = @year.to_i
       @year = @year > Date.today.year.to_s.gsub('20','').to_i ? "19#{@year}" : "20#{@year}"
     end
-    correct_digits
+    correct_digits!
     @year.to_s.gsub!('~','')
   end
   
   def precision
-    correct_digits
+    correct_digits!
     if @year.nil? || (@year.to_s == '0000' && @month.to_s == '00') || (@year.to_s == "8888")
       "invalid"
     elsif self.to_date
@@ -123,10 +123,17 @@ class PseudoDate
   
   private
   
-  def correct_digits
+  def correct_digits!
     @year = '0000' if @year.to_s.strip.length == 0
     @month = '00' if @month.to_s.strip.length == 0
     @day = '00' if @day.to_s.strip.length == 0
+    
+    @day = "0#{@day}" if @day.to_s.length == 1
+    @month = "0#{@month}" if @month.to_s.length == 1
+    
+    %w(day month year).each do |i|
+      @date_hash[i.to_sym] = self.send(i)
+    end
   end
   
 end

@@ -70,6 +70,14 @@ class TestPseudoDate < Test::Unit::TestCase
       end
     end
     
+    context "converting to a hash" do
+      should "use double digit strings for day and month" do
+        date = PseudoDate.new(:day => '1', :month => '2', :year => '1980')
+        assert_equal '01', date.to_hash[:day]
+        assert_equal '02', date.to_hash[:month]
+      end
+    end
+    
   end
   
 end
