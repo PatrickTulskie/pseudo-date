@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('pseudo_date', '0.1.0') do |p|
+Echoe.new('pseudo_date', '0.1.4') do |p|
   p.description = 'Date parser and container for partial or incomplete dates.'
   p.url = 'http://github.com/PatrickTulskie/pseudo_date'
   p.author = 'Patrick Tulskie'
