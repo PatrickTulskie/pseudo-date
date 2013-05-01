@@ -42,7 +42,16 @@ class PseudoDate
   # = Boolean Questions =
   # =====================
   def valid?
-    !(@date_hash.nil? || @date_hash.empty?)
+    !(@date_hash.nil? || @date_hash.empty?) && self.present?
+  end
+  
+  def blank?
+    (@year.to_s == '0000' && @month.to_s == '00' && @day.to_s == '00')
+  end
+  alias_method :empty?, :blank?
+  
+  def present?
+    !self.blank?
   end
   
   # ====================
@@ -124,11 +133,11 @@ class PseudoDate
   private
   
   def correct_digits!
-    @year = '0000' if @year.to_s.strip.length == 0
+    @year  = '0000' if @year.to_s.strip.length == 0
     @month = '00' if @month.to_s.strip.length == 0
-    @day = '00' if @day.to_s.strip.length == 0
+    @day   = '00' if @day.to_s.strip.length == 0
     
-    @day = "0#{@day}" if @day.to_s.length == 1
+    @day   = "0#{@day}" if @day.to_s.length == 1
     @month = "0#{@month}" if @month.to_s.length == 1
     
     %w(day month year).each do |i|

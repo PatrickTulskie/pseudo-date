@@ -1,4 +1,3 @@
 require 'rubygems'
-require 'test/unit'
-require 'shoulda'
+require 'rspec'
 require File.dirname(__FILE__) + '/../lib/pseudo_date'
