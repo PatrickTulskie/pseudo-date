@@ -8,7 +8,7 @@ describe "PseudoDate Parsing" do
     @year        = '1985'
     @string_date = 'Jun 25, 1985'
   end
-
+  
   context "date hash" do
     it "should parse an exact hash" do
       pd = PseudoDate.new(:year => @year, :day => @day, :month => @month)
@@ -24,7 +24,7 @@ describe "PseudoDate Parsing" do
       pd.year.should == @year
     end
   end
-
+  
   # 19850625
   context "yearmonthday" do
     it 'should be exact precision' do
@@ -38,7 +38,7 @@ describe "PseudoDate Parsing" do
       pd.year.should == @year
     end
   end
-
+  
   # 1985-25-06
   context "year-day-month" do
     it 'should be exact precision' do
@@ -52,7 +52,7 @@ describe "PseudoDate Parsing" do
       pd.year.should == @year
     end
   end
-
+  
   # 06-25-1985
   context "month-day-year" do
     it 'should be exact precision' do
@@ -66,7 +66,7 @@ describe "PseudoDate Parsing" do
       pd.year.should == @year
     end
   end
-
+  
   # 25-06-1985
   context "day-month-year" do
     it 'should be exact precision' do
@@ -80,7 +80,7 @@ describe "PseudoDate Parsing" do
       pd.year.should == @year
     end
   end
-
+  
   # 06/25/1985
   context "month/day/year" do
     it 'should be exact precision' do
@@ -94,7 +94,7 @@ describe "PseudoDate Parsing" do
       pd.year.should == @year
     end
   end
-
+  
   # 06/1985
   context "month/year" do
     it 'should be partial precision' do
@@ -107,7 +107,7 @@ describe "PseudoDate Parsing" do
       pd.year.should == @year
     end
   end
-
+  
   # 85
   context "two digit year" do
     it 'should be year precision' do
@@ -120,16 +120,46 @@ describe "PseudoDate Parsing" do
     end
   end
 
-  # 1985
   context "four digit year" do
-    it 'should be year precision' do
-      PseudoDate.new(@year).precision.should == 'year'
-    end
+    
+    # 1885
+    context "in the 19th century" do
+      it 'should be year precision' do
+        PseudoDate.new('1885').precision.should == 'year'
+      end
   
-    it 'should match original input' do
-      pd = PseudoDate.new(@year)
-      pd.year.should == @year
+      it 'should match original input' do
+        pd = PseudoDate.new('1885')
+        pd.day.should == '00'
+        pd.month.should == '00'
+        pd.year.should == '1885'
+      end
     end
+    
+    # 1985
+    context "in the 20th century" do
+      it 'should be year precision' do
+        PseudoDate.new('1985').precision.should == 'year'
+      end
+      
+      it 'should match original input' do
+        pd = PseudoDate.new('1985')
+        pd.year.should == '1985'
+      end
+    end
+    
+    # 2085
+    context "in the 21st century" do
+      it 'should be year precision' do
+        PseudoDate.new('2085').precision.should == 'year'
+      end
+      
+      it 'should match original input' do
+        pd = PseudoDate.new('2085')
+        pd.year.should == '2085'
+      end
+    end
+    
   end
 
   # Jun 25, 1985

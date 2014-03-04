@@ -75,7 +75,7 @@ class Parser
         month, day = [day, month] if month.to_i > 12 && month.to_i > day.to_i
       end
     elsif input.length == 4 # 2004
-      year = input.to_s if (input.slice(0..1) == '19' || input.slice(0..1) == '20')
+      year = input.to_s
     elsif input.length == 2 # 85
       year = (input.to_i > Date.today.year.to_s.slice(2..4).to_i) ? "19#{input}" : "20#{input}"
     elsif input.match(/\w/) # Jun 23, 2004
