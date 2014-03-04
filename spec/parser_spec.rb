@@ -122,26 +122,20 @@ describe "PseudoDate Parsing" do
 
   context "four digit year" do
     
+    it 'should be year precision' do
+      PseudoDate.new(@year).precision.should == 'year'
+    end
+    
     # 1885
     context "in the 19th century" do
-      it 'should be year precision' do
-        PseudoDate.new('1885').precision.should == 'year'
-      end
-  
       it 'should match original input' do
         pd = PseudoDate.new('1885')
-        pd.day.should == '00'
-        pd.month.should == '00'
         pd.year.should == '1885'
       end
     end
     
     # 1985
     context "in the 20th century" do
-      it 'should be year precision' do
-        PseudoDate.new('1985').precision.should == 'year'
-      end
-      
       it 'should match original input' do
         pd = PseudoDate.new('1985')
         pd.year.should == '1985'
@@ -150,10 +144,6 @@ describe "PseudoDate Parsing" do
     
     # 2085
     context "in the 21st century" do
-      it 'should be year precision' do
-        PseudoDate.new('2085').precision.should == 'year'
-      end
-      
       it 'should match original input' do
         pd = PseudoDate.new('2085')
         pd.year.should == '2085'
