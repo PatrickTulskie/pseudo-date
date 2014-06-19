@@ -1,12 +1,16 @@
 require 'date'
 class Parser
   
+  AMERICAN_DATE_FORMAT = '%m/%d/%Y'
+  EUROPEAN_DATE_FORMAT = '%Y-%m-%d'
+  
   def self.parse(input)
     date_hash = {}
     # Minor Pre Cleanup
     input.strip!; input.gsub!('~','')
     
-    date = input.split(/\/|-/).length < 3 ? nil : Date.parse(input) rescue nil
+    date = parse_with_poro_date(input)
+    
     if date
       date_hash = { :year => date.year.to_s, :month => date.month.to_s, :day => date.day.to_s }
     else
@@ -44,6 +48,22 @@ class Parser
   end
   
   private
+  
+  def self.parse_with_poro_date(string)
+    # If our date has 3 parts then let's try to parse it with Date::strptime
+    if string.split(/\/|-/).length < 3
+      case string
+      when /-/ # Europeans generally use hyphens to separate date pieces
+        Date.strptime(string, EUROPEAN_DATE_FORMAT)
+      when /\// # Americans usually use a / to separate date pieces
+        Date.strptime(string, AMERICAN_DATE_FORMAT)
+      end
+    else
+      nil # Not enough parts so just return nil
+    end
+  rescue
+    nil # We don't actually care why Date is complaining. We'll fall back to slower parsing later.
+  end
   
   def self.parse_string(input)
     day, month, year = "00", "00", "0000"

@@ -95,6 +95,20 @@ describe "PseudoDate Parsing" do
     end
   end
   
+  # 06/7/1985
+  context "month/day/year" do
+    it 'should be exact precision' do
+      PseudoDate.new("#{@month}/7/#{@year}").precision.should == 'exact'
+    end
+  
+    it 'should match original input' do
+      pd = PseudoDate.new("#{@month}/7/#{@year}")
+      pd.day.should == "07"
+      pd.month.should == @month
+      pd.year.should == @year
+    end
+  end
+  
   # 06/1985
   context "month/year" do
     it 'should be partial precision' do
