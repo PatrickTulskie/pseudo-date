@@ -6,15 +6,17 @@ It's a date but not really.  A PseudoDate object has a day, month, and year but 
 
 ## What Is This For?
 
-PseudoDate was created to parse odd dates in odd formats and attempt to extract as much information from them as possible.  It's especially handy when you're trying to convert a date string that has come from an OCR'd source.
+PseudoDate was created to parse odd dates in odd formats and attempt to extract as much information from them as possible.  It's especially handy when you're trying to convert a date string that has come from an OCR'd source.  It was primarily written to parse dates in American public record data in an effort to have a common date format when doing record matching.
 
 ## Assumptions
 
-As with all parsing, one needs to make assumptions.  The main assumption made here is that all dates will be in the past.
+As with all parsing, one needs to make assumptions.  The main assumption made here is that all dates will be in the past.  Dates that appear to be far-future are generally labeled as "invalid."
+
+Since this gem was built for trying to wrangle OCR'd dates we have to make some assumptions when it comes to date formats.  As of `0.2.0` the gem now assumes that dates separated by a "/" are American dates and those that are separated by a "-" are European dates.  Future versions may allow some configuration for this depending on your usage but in my experience there has not been a need for that.  This mimics the behavior from Ruby 1.8.7 which was changed in Ruby 1.9+.
 
 ## Other Notes
 
-PseudoDate stores date attributes in strings instead of integers to avoid losing the preceding '0' on various attributes.  This was a decision made when first creating the class because of the way things were being output in the project it was created for.
+PseudoDate stores date attributes in strings instead of integers to avoid losing the preceding '0' on various attributes.  This was a decision made when first creating the class because of the way things were being output in the project it was created for.  There has been some discussion about switching these to integers in order to help save on memory but no decision has been made here either way.
 
 ## Compatability
 
