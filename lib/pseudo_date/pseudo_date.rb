@@ -86,22 +86,22 @@ class PseudoDate
     when 'exact'
       self.to_date < other.to_date
     when 'year_month'
-      self.year == other.year ? (self.month < other.month) : (self.year < other.year)
+      self.year == other.year ? (self.month.to_i < other.month.to_i) : (self.year.to_i < other.year.to_i)
     when 'year'
-      self.year < other.year
+      self.year.to_i < other.year.to_i
     when 'mixed'
       if self.precision == 'invalid'
         true
       elsif other.precision == 'invalid'
         false
-      elsif self.year == other.year
-        if self.month == other.month
+      elsif self.year.to_i == other.year.to_i
+        if self.month.to_i == other.month.to_i
           self.day.to_i < other.day.to_i
         else
-          self.month < other.month
+          self.month.to_i < other.month.to_i
         end
       else
-        self.year < other.year
+        self.year.to_i < other.year.to_i
       end
     else
       false

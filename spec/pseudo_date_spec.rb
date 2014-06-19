@@ -22,7 +22,7 @@ describe "PseudoDate" do
     it "should demonstrate later dates as greater than older dates" do
       old_date = PseudoDate.new(:year => @year, :month => @month)
       new_date = PseudoDate.new(:year => 1996, :month => @month)
-      (old_date < new_date).should be_true
+      (old_date < new_date).should == true
     end
     it "should respond properly with the spaceship operator" do
       old_date = PseudoDate.new(:year => @year, :month => @month)
@@ -37,7 +37,7 @@ describe "PseudoDate" do
     it "should demonstrate later dates as greater than older dates" do
       old_date = PseudoDate.new(:year => @year, :month => @month, :day => @day)
       new_date = PseudoDate.new(:year => 1996, :month => @month, :day => @day)
-      (old_date < new_date).should be_true
+      (old_date < new_date).should == true
     end
     it "should respond properly with the spaceship operator" do
       old_date = PseudoDate.new(:year => @year, :month => @month, :day => @day)
@@ -52,12 +52,12 @@ describe "PseudoDate" do
     it "should demonstrate later dates as greater than older dates" do
       old_date = PseudoDate.new(:year => @year, :month => @month)
       new_date = PseudoDate.new(:year => 1996, :month => @month, :day => @day)
-      (old_date < new_date).should be_true
+      (old_date < new_date).should == true
     end
     it "should demonstrate invalid dates as less than complete dates" do
       complete = PseudoDate.new(:year => @year, :month => @month)
       invalid = PseudoDate.new("")
-      (complete > invalid).should be_true
+      (complete > invalid).should == true
     end
     it "should respond properly with the spaceship operator" do
       old_date = PseudoDate.new(:year => @year, :month => @month)
