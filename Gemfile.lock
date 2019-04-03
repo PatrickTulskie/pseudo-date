@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pseudo_date (0.1.6)
+    pseudo_date (0.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -32,3 +32,6 @@ DEPENDENCIES
   byebug
   pseudo_date!
   rspec
+
+BUNDLED WITH
+   1.16.6
