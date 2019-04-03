@@ -86,8 +86,8 @@ class Parser
       year = date_array.select{ |part| part.length == 4 }.first
       unless year.nil? || date_array.length != 3
         if date_array.first == year
-          month = date_array.last
-          day = date_array[1]
+          month = date_array[1]
+          day = date_array.last
         else
           month = date_array.first
           day = date_array[1]
