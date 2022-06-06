@@ -1,16 +1,11 @@
 PATH
   remote: .
   specs:
-    pseudo_date (0.1.6)
+    pseudo_date (0.2.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    byebug (3.1.2)
-      columnize (~> 0.8)
-      debugger-linecache (~> 1.2)
-    columnize (0.8.9)
-    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
@@ -29,6 +24,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
   pseudo_date!
   rspec
+
+BUNDLED WITH
+   2.1.4
