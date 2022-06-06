@@ -1,7 +1,7 @@
 class String
   
   def to_date_hash
-    Parser.parse(self)
+    PseudoDate::Parser.parse(self)
   end
     
   def to_pseudo_date
